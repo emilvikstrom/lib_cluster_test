@@ -8,21 +8,12 @@ defmodule LibClusterTest.Application do
 
   @impl true
   def start(_type, _args) do
-    topologies = [
-      example: [
-        strategy: ClusterEC2.Strategy.Tags,
-        config: [
-          ec2_tagname: "elixir-cluster"
-        ]
-      ]
-    ]
-
     Logger.debug("Starting #{inspect(topologies)}")
 
     children = [
       # Starts a worker by calling: LibClusterTest.Worker.start_link(arg)
       # {LibClusterTest.Worker, arg}a
-      {Cluster.Supervisor, [topologies, [name: LibClusterTest.ClusterSupervisor]]}
+      {Cluster.Supervisor, [topologies(), [name: LibClusterTest.ClusterSupervisor]]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -30,4 +21,6 @@ defmodule LibClusterTest.Application do
     opts = [strategy: :one_for_one, name: LibClusterTest.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def topologies(), do: Application.get_env(:libcluster, :topologies)
 end

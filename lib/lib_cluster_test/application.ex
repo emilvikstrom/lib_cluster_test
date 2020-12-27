@@ -1,4 +1,5 @@
 defmodule LibClusterTest.Application do
+  require Logger
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -15,6 +16,8 @@ defmodule LibClusterTest.Application do
         ]
       ]
     ]
+
+    Logger.debug("Starting #{inspect(topologies)}")
 
     children = [
       # Starts a worker by calling: LibClusterTest.Worker.start_link(arg)

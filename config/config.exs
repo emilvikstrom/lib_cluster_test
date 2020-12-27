@@ -11,3 +11,6 @@ config :libcluster,
       ]
     ]
   ]
+
+config :ex_aws,
+  jason_codec: Jason

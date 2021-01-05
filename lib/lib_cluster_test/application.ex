@@ -16,7 +16,7 @@ defmodule LibClusterTest.Application do
       {Cluster.Supervisor, [topologies(), [name: LibClusterTest.ClusterSupervisor]]},
       {Horde.Registry, [name: LibClusterTest.Registry, keys: :unique]},
       {Horde.DynamicSupervisor,
-       [name: LibClusterTest.HordeClusterSupervisor, strategy: :one_for_one]}
+       [name: LibClusterTest.HordeClusterSupervisor, strategy: :one_for_one, members: :auto]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

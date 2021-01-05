@@ -6,7 +6,8 @@ config :libcluster,
     example: [
       strategy: ClusterEC2.Strategy.Tags,
       config: [
-        ec2_tagname: "elixir-cluster",
+        ec2_tagname: "elixir-cluster-mk2",
+        app_prefix: "app",
         show_debug: true
       ]
     ]

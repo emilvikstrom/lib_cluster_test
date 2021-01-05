@@ -13,7 +13,9 @@ defmodule LibClusterTest.Application do
     children = [
       # Starts a worker by calling: LibClusterTest.Worker.start_link(arg)
       # {LibClusterTest.Worker, arg}a
-      {Cluster.Supervisor, [topologies(), [name: LibClusterTest.ClusterSupervisor]]}
+      {Cluster.Supervisor, [topologies(), [name: LibClusterTest.ClusterSupervisor]]},
+      {Horde.Registry, [name: LibClusterTest.Registry, keys: :unique]},
+      {Horde.DynamicSupervisor, [name: LibClusterTest.ClusterSupervisor, strategy: :one_for_one]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

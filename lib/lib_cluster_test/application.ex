@@ -8,13 +8,14 @@ defmodule LibClusterTest.Application do
 
   @impl true
   def start(_type, _args) do
-    Logger.debug("Starting #{inspect(topologies)}")
+    Logger.debug("Starting #{inspect(topologies())}")
 
     children = [
       # Starts a worker by calling: LibClusterTest.Worker.start_link(arg)
       # {LibClusterTest.Worker, arg}a
       {Cluster.Supervisor, [topologies(), [name: LibClusterTest.ClusterSupervisor]]},
-      {Horde.Registry, [name: LibClusterTest.Registry, keys: :unique]}
+      {Horde.Registry, [name: LibClusterTest.Registry, keys: :unique]},
+      {Horde.DynamicSupervisor, [name: HelloWorld.HelloSupervisor, strategy: :one_for_one]}
       # {Horde.DynamicSupervisor, [name: LibClusterTest.ClusterSupervisor, strategy: :one_for_one]}
     ]
 

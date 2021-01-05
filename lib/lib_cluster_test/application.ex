@@ -22,6 +22,12 @@ defmodule LibClusterTest.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: LibClusterTest.Supervisor]
     Supervisor.start_link(children, opts)
+
+    # Start processes under Horde
+    Horde.DynamicSupervisor.start_child(
+      LibClusterTest.ClusterSupervisor,
+      LibClusterTest.Capabilities
+    )
   end
 
   def topologies(), do: Application.get_env(:libcluster, :topologies)
